@@ -13,7 +13,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
 
     # Relationships
-    user = db.relationship("User", back_populates="post")
+    user = db.relationship("User", back_populates="posts")
 
 def to_dict(self):
         return {
