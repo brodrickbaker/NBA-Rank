@@ -7,11 +7,11 @@ class List(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False, primary_key=True)
-    player_1 = db.Column(db.Integer, nullable=True)
-    player_2 = db.Column(db.Integer, nullable=True)
-    player_3 = db.Column(db.Integer, nullable=True)
-    player_4 = db.Column(db.Integer, nullable=True)
-    player_5 = db.Column(db.Integer, nullable=True)
+    player_1 = db.Column(db.String(40), nullable=True)
+    player_2 = db.Column(db.String(40), nullable=True)
+    player_3 = db.Column(db.String(40), nullable=True)
+    player_4 = db.Column(db.String(40), nullable=True)
+    player_5 = db.Column(db.String(40), nullable=True)
 
 
     # Relationships

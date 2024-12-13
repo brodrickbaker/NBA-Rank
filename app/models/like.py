@@ -6,7 +6,7 @@ class Like(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    player_id = db.Column(db.Integer, nullable=False, primary_key=True)
+    player_id = db.Column(db.String(40), nullable=False, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False, primary_key=True)
 
     # Relationships
