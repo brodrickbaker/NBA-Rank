@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
     # Relationships
     posts = db.relationship("Post", back_populates="user")
     list = db.relationship("List", uselist=False, back_populates="user")
-    likes = db.relationship("Post", back_populates="user")
+    likes = db.relationship("Like", back_populates="user")
 
     @property
     def password(self):
