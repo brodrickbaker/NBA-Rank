@@ -1,0 +1,9 @@
+.categories {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.categories .card {
+    width: 300px;
+}

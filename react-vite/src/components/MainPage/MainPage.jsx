@@ -1,24 +1,41 @@
-import { season2023 } from "../../../data/season_data";
+import { NavLink } from "react-router-dom";
+import { seasonData } from "../../../data/season_data";
+import { useState } from "react";
+import "./MainPage.css"
 
 const MainPage = () => {
+  const [year, setYear] = useState(2023)
+
+  const handleChange = e => setYear(e.target.value);
+   
   return (
     <main>
-      <h1>Welcome to NBA Rank</h1>  
+      <h1>Welcome to NBA Rank</h1>
+      <label htmlFor='year-select'>Select a year</label>
+      <select name='year' id='year-select' onChange={handleChange}>
+        <option value={2023}>2023</option>
+        <option value={2022}>2022</option>
+        <option value={2021}>2021</option>
+        <option value={2020}>2020</option>
+        <option value={2019}>2019</option>
+        </select>  
       <h2>Categories</h2>
-      {season2023.categories.map(cat => {
+      <div className="categories"> 
+      {seasonData[year].categories.map(cat => {
         return (
         <div className="card" key={cat.name}>
-            <h3>{cat.name.split('_').join(' ').toUpperCase()}</h3>
+            <h3><NavLink to={cat.name}>{cat.name.split('_').join(' ').toUpperCase()}</NavLink></h3>
             <ol>
                 {cat.ranks.map(r => {
                    if(r.rank <= 5){
                     return (
-                        <li key={r.player.reference}>{r.player.full_name}, {r.score > 1? r.score:(r.score*100).toFixed(1)}{r.score > 1? '/game':'%'}</li>
+                        <li key={r.player.reference}><NavLink to={`players/${r.player.id}`}>{r.player.full_name}, {r.score > 1? r.score:(r.score*100).toFixed(1)}{r.score > 1? '/game':'%'}</NavLink></li>
                     )}
                 })}
             </ol>
         </div>)
       })}
+      </div>
     </main>
   )
 };
