@@ -13,7 +13,7 @@ const MainPage = () => {
                 {cat.ranks.map(r => {
                    if(r.rank <= 5){
                     return (
-                        <li key={r.rank}>{r.player.full_name}, {r.score > 1? r.score:(r.score*100).toFixed(1)}{r.score > 1? '/game':'%'}</li>
+                        <li key={r.player.reference}>{r.player.full_name}, {r.score > 1? r.score:(r.score*100).toFixed(1)}{r.score > 1? '/game':'%'}</li>
                     )}
                 })}
             </ol>

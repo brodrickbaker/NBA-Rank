@@ -30,16 +30,11 @@ a:hover {
     color: #faeded;
 }
 .btn {
-    background: linear-gradient(190deg, #e86b6b, #e13c3c ,#DB0000);
-    border: 1px solid rgb(0, 0, 0);
+    background: #DB0000;
+    border: none;
     border-radius: 25px;
-    padding: 5px 5px 2px 5px;
-    margin: 5px 2px;
-    font-weight: 600;
-    color: #faeded;
-    display: flex;
-    width: fit-content;
-    justify-items: center;
+    font-size: 16px;
+    padding: 5px 15px;
 }
 .btn:hover {
     background: #e13c3c;
