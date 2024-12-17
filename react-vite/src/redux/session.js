@@ -1,5 +1,6 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+// const UPDATE_ABOUT = 'session/updateAbout';
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -9,6 +10,28 @@ const setUser = (user) => ({
 const removeUser = () => ({
   type: REMOVE_USER
 });
+
+// const updateAbout =(about) => ({
+//   type: UPDATE_ABOUT
+// }) 
+
+// export const thunkAbout = (about) => async dispatch => {
+//   const response = await fetch("/api/users/:id", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(about)
+//   });
+
+//   if(response.ok) {
+//     const data = await response.json();
+//     dispatch(updateAbout(data));
+//   } else if (response.status <= 400) {
+//     const errorMessages = await response.json();
+//     return errorMessages
+//   } else {
+//     return { server: "Something went wrong. Please try again" }
+//   }
+// };
 
 export const thunkAuthenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/");

@@ -14,7 +14,7 @@ const CategoryPage = () => {
             {seasonData[year].categories.find(cat => cat.name == category).ranks.map(r => {
                 const playerId = r.player.id
                 return (
-                    <NavLink to={`/players/${playerId}`}><li key={r.player.rank}>{r.player.full_name}</li></NavLink>
+                    <li key={playerId}><NavLink to={`/players/${playerId}`}>{r.player.full_name}</NavLink></li>
                   )
             })}
         </ol>

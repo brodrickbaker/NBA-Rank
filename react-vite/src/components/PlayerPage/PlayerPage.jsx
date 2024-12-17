@@ -13,6 +13,7 @@ const PlayerPage = (props) => {
     <main>
       <h1>{player.full_name}</h1>
       <h3>Position: {player.position}, Team: {player.team.name}, Drafted: {player.draft.year} Rd {player.draft.round} Pk {player.draft.pick}, Years Pro: {player.seasons[0].year - player.draft.year + 1}</h3>
+      <h2>{year} Season Stats</h2>
       <div id='stats' className="card">
         <table>
             <thead>
