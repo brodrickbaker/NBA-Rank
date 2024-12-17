@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
     const user = useSelector(state => state.session.user)
-  
+    
     return (
     <main>
       <h1>{user.username}</h1>
