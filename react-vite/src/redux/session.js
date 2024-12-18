@@ -21,9 +21,9 @@ export const thunkAbout = (about, id) => async dispatch => {
 
   if(response.ok) {
     const res = await fetch("/api/auth/");
-	  if (res.ok) {
-		const data = await res.json();
-		if (data.errors) {
+    if (res.ok) {
+      const data = await res.json();
+      if (data.errors) {
 			return;
 		}
 		dispatch(setUser(data));

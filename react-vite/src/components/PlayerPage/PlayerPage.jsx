@@ -12,7 +12,7 @@ const PlayerPage = (props) => {
   const dispatch = useDispatch()
 
   useEffect (() => {
-    dispatch(setPlayer(player))
+    dispatch(setPlayer(player?.full_name))
   })
 
   if (player) {
