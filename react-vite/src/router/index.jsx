@@ -7,8 +7,6 @@ import PlayerPage from '../components/PlayerPage';
 import { playerData } from '../../data/player_data';
 import Layout from './Layout';
 import CategoryPage from '../components/CategoryPage';
-//temporary year const, will change to select year
-const year = 2023;
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +34,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "players/:playerId",
-        element: <PlayerPage playerData={playerData} year={year}/>,
+        element: <PlayerPage playerData={playerData}/>,
       },
     ],
   },

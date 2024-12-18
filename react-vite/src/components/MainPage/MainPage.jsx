@@ -1,12 +1,22 @@
 import { NavLink } from "react-router-dom";
 import { seasonData } from "../../../data/season_data";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./MainPage.css"
+import { setYear } from "../../redux/selected";
+import { useDispatch } from "react-redux";
 
 const MainPage = () => {
-  const [year, setYear] = useState(2023)
+  const [year, selectYear] = useState(2023)
+  const dispatch = useDispatch()
 
-  const handleChange = e => setYear(e.target.value);
+    useEffect (() => {
+      dispatch(setYear(year))
+    })
+
+  const handleChange = e => {
+    selectYear(e.target.value)
+    dispatch(setYear(e.target.value))
+};
    
   return (
     <main>

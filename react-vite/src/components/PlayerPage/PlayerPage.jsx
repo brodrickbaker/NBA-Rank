@@ -1,10 +1,19 @@
 import { useParams } from "react-router-dom";
 import { seasonData } from "../../../data/season_data";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setPlayer } from "../../redux/selected";
 
 const PlayerPage = (props) => {
-  const { playerData, year } = props
+  const { playerData } = props
   const { playerId } = useParams()  
   const player = playerData[playerId]
+  const year = useSelector(state => state.selected.year)
+  const dispatch = useDispatch()
+
+  useEffect (() => {
+    dispatch(setPlayer(player))
+  })
 
   if (player) {
   const stats = player.seasons.find(season => season.year == year).teams[0]
@@ -12,7 +21,7 @@ const PlayerPage = (props) => {
   return (
     <main>
       <h1>{player.full_name}</h1>
-      <h3>Position: {player.position}, Team: {player.team.name}, Drafted: {player.draft.year} Rd {player.draft.round} Pk {player.draft.pick}, Years Pro: {player.seasons[0].year - player.draft.year + 1}</h3>
+      <h3>Position: {player.position}, Team: {player.team? player.team.name: 'Not Currently in NBA'}, Drafted: {player.draft.year} Rd {player.draft.round} Pk {player.draft.pick}, Years Pro: {player.seasons[0].year - player.draft.year + 1}</h3>
       <h2>{year} Season Stats</h2>
       <div id='stats' className="card">
         <table>

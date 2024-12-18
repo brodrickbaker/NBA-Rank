@@ -1,14 +1,24 @@
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import OpenModalButton from "../OpenModalButton";
+import UpdateAboutModal from "./UpdateAboutModal";
 
 const ProfilePage = () => {
     const user = useSelector(state => state.session.user)
-    
+    const navigate = useNavigate()
+
+    if (!user) navigate('/')
+
     return (
     <main>
       <h1>{user.username}</h1>
       <div id="about" className="card">
         <h2>About Me</h2>
         <p>{user.about? user.about:"Say a little something about yourself"}</p>
+        <OpenModalButton
+          modalComponent={<UpdateAboutModal/>}
+          buttonText={'edit'} 
+        />
       </div>
       <div id="top5" className="card">
         <h2>My Top 5</h2>

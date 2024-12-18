@@ -131,6 +131,18 @@ td {
     justify-self: center;
 }
 
+#modal-content {
+    border-radius: 10px;
+}
+
+#modal-content .card{
+    margin: 0;
+}
+
+textarea {
+    color: black
+}
+
 @media screen and (max-width:1000px) {
  
     .nav {
