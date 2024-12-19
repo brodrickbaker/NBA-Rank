@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import { seasonData } from "../../../data/season_data";
 import { NavLink } from "react-router-dom";
-//temporary year const, will change to select year
-const year = 2023;
+import { useSelector } from "react-redux";
 
 const CategoryPage = () => {
-  const { category } = useParams()
+  const { category } = useParams();
+  const year = useSelector(state => state.selected.year);
 
   return (
     <div>

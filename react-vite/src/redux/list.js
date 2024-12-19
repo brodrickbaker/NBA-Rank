@@ -16,8 +16,6 @@ export const setList = (list) => ({
         dispatch(setList(data));
     }
   };
-
-  
   
   export const addToList = (player) => async dispatch => {
   
@@ -37,6 +35,25 @@ export const setList = (list) => ({
       return { server: "Something went wrong. Please try again" }
     }
   };
+
+  export const deletePlayer = (playerId) => async dispatch => {
+
+    const response = await fetch(`/api/lists/current/${playerId}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+  
+    if(response.ok) {
+        const data = await response.json();
+        dispatch(setList(data));
+    } else if (response.status <= 400) {
+      const errorMessages = await response.json();
+      return errorMessages
+    } else {
+      return { server: "Something went wrong. Please try again" }
+    }
+
+  }
 
 
 
