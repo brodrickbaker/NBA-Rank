@@ -9,6 +9,7 @@ const PlayerPage = (props) => {
   const { playerData } = props
   const { playerId } = useParams()  
   const player = playerData[playerId]
+  const user = useSelector(state => state.session.user);
   const year = useSelector(state => state.selected.year)
   const list = useSelector(state => state.list.list)
   const dispatch = useDispatch()
@@ -29,7 +30,7 @@ const PlayerPage = (props) => {
     <main>
       <h1>{player.full_name}</h1>
       <h3>Position: {player.position}, Current Team: {player.team? player.team.name: 'Not Currently in NBA'}, Drafted: {player.draft.year} Rd {player.draft.round} Pk {player.draft.pick}, Years Pro: {player.seasons[0].year - player.draft.year + 1}</h3>
-      {!Object.values(list).find(p => p == player.id) &&
+      {user && !Object.values(list).find(p => p == player.id) &&
         <button className="btn" onClick={handleClick}>Add to top 5</button>}
       <h2>{year} Season Stats</h2>
       <div id='stats' className="card">

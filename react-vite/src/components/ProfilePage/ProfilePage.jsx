@@ -8,7 +8,7 @@ import { playerData } from "../../../data/player_data";
 
 const ProfilePage = () => {
     const user = useSelector(state => state.session.user);
-    const list = useSelector(state => state.list.list)
+    const list = useSelector(state => state.list.list);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     
