@@ -2,17 +2,20 @@ import { NavLink } from "react-router-dom";
 import { seasonData } from "../../../data/season_data";
 import { useState, useEffect } from "react";
 import { setYear } from "../../redux/selected";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getListThunk } from "../../redux/list";
 import "./MainPage.css"
 
 const MainPage = () => {
   const [year, selectYear] = useState(2023)
   const dispatch = useDispatch()
+  const user = useSelector(state => state.session.user);
 
     useEffect (() => {
       dispatch(setYear(year))
-      dispatch(getListThunk())
+      if (user){
+        dispatch(getListThunk())
+      }
     })
 
   const handleChange = e => {
