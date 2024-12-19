@@ -41,12 +41,26 @@ def add_player():
         return jsonify(list.to_dict())
     return jsonify({"message": "List couldn't be found"}), 404
 
-# # Delete a player from the current user's list
-# @list_routes.route('/current/<playerId>', methods=['PUT'])
-# @login_required
-# def delete_player(playerId):
-#     list = List.query.filter_by(user_id=current_user.id).first()
-#     if list:
-#         db.session.commit()
-#         return jsonify({"message": "Player deleted successfully"}), 200
-#     return jsonify({"message": "Player not found"}), 404
+# Delete a player from the current user's list
+@list_routes.route('/current/<playerId>', methods=['DELETE'])
+@login_required
+def delete_player(playerId):
+    list = List.query.filter_by(user_id=current_user.id).first()
+    if list:
+        for player, id in list.to_dict().items():
+            print(list.to_dict().items())
+            if id == playerId:
+                if player == 'player_1':
+                    list.player_1 = None
+                if player == 'player_2':
+                    list.player_2 = None
+                if player == 'player_3':
+                    list.player_3 = None
+                if player == 'player_4':
+                    list.player_4 = None
+                if player == 'player_5':
+                    list.player_5 = None
+                db.session.add(list)
+                db.session.commit()
+                return jsonify(list.to_dict()), 200
+    return jsonify({"message": "Player not found"}), 404
