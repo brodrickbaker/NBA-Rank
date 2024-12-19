@@ -17,7 +17,7 @@ class List(db.Model):
     # Relationships
     user = db.relationship("User", back_populates="list")
 
-def to_dict(self):
+    def to_dict(self):
         return {
             'user_id': self.user_id,
             'player_1': self.player_1,

@@ -1,13 +1,22 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import UpdateAboutModal from "./UpdateAboutModal";
+import { useEffect } from "react";
+import { getListThunk } from "../../redux/list";
+import { playerData } from "../../../data/player_data";
 
 const ProfilePage = () => {
-    const user = useSelector(state => state.session.user)
-    const navigate = useNavigate()
+    const user = useSelector(state => state.session.user);
+    const list = useSelector(state => state.list.list)
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    
+    if (!user) navigate('/');
 
-    if (!user) navigate('/')
+    useEffect(() => {
+      dispatch(getListThunk())
+    }, [dispatch])
 
     return (
     <main>
@@ -23,11 +32,11 @@ const ProfilePage = () => {
       <div id="top5" className="card">
         <h2>My Top 5</h2>
         <ol>
-            <li>{user.top5?.one? user.top5.one: ""}</li>
-            <li>{user.top5?.two? user.top5.two: ""}</li>
-            <li>{user.top5?.three? user.top5.three: ""}</li>
-            <li>{user.top5?.four? user.top5.four: ""}</li>
-            <li>{user.top5?.five? user.top5.five: ""}</li> 
+            <li>{list.player_1? playerData[list.player_1].full_name: ""}</li>
+            <li>{list.player_2? playerData[list.player_2].full_name: ""}</li>
+            <li>{list.player_3? playerData[list.player_3].full_name: ""}</li>
+            <li>{list.player_4? playerData[list.player_4].full_name: ""}</li>
+            <li>{list.player_5? playerData[list.player_5].full_name: ""}</li> 
         </ol>
       </div>
       <div className="card">
