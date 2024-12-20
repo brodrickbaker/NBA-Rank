@@ -12,7 +12,7 @@ class Like(db.Model):
     # Relationships
     user = db.relationship("User", back_populates="likes")
 
-def to_dict(self):
+    def to_dict(self):
         return {
             'player_id': self.player_id,
             'user_id': self.user_id
