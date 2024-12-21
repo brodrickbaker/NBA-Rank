@@ -4,19 +4,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setPlayer } from "../../redux/selected";
 import { addToList } from "../../redux/list";
+import { getListThunk } from "../../redux/list";
 
 const PlayerPage = (props) => {
   const { playerData } = props
   const { playerId } = useParams()  
   const player = playerData[playerId]
   const user = useSelector(state => state.session.user);
-  const year = useSelector(state => state.selected.year)
+  const year = useSelector(state => state.selected.year)? useSelector(state => state.selected.year): 2023
   const list = useSelector(state => state.list.list)
   const dispatch = useDispatch()
 
   useEffect (() => {
     dispatch(setPlayer(player?.full_name))
-  })
+    dispatch(getListThunk())
+  }, [dispatch])
   
   const handleClick = (e) => {
     e.preventDefault()
@@ -24,15 +26,16 @@ const PlayerPage = (props) => {
   }
 
   if (player) {
+  
   const stats = player.seasons.find(season => season.year == year).teams[0]
 
   return (
     <main>
       <h1>{player.full_name}</h1>
       <h3>Position: {player.position}, Current Team: {player.team? player.team.name: 'Not Currently in NBA'}, Drafted: {player.draft.year} Rd {player.draft.round} Pk {player.draft.pick}, Years Pro: {player.seasons[0].year - player.draft.year + 1}</h3>
-      {user && !Object.values(list).find(p => p == player.id) &&
+      {user && list && !Object.values(list).find(p => p == player.id) &&
         <button className="btn" onClick={handleClick}>Add to top 5</button>}
-      <h2>{year} Season Stats</h2>
+      <h2>{year}-{Number(year) + 1} Season Stats</h2>
       <div id='stats' className="card">
         <table>
             <thead>

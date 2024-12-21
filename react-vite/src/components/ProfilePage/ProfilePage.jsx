@@ -2,27 +2,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import UpdateAboutModal from "./UpdateAboutModal";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getListThunk, deletePlayer } from "../../redux/list";
 import { playerData } from "../../../data/player_data";
 import { NavLink } from "react-router-dom";
+import { getUserPosts } from "../../redux/post";
 
 const ProfilePage = () => {
     const user = useSelector(state => state.session.user);
     const list = useSelector(state => state.list.list);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    let posts = useSelector(state => state.posts.userPosts);
+    const [isLoaded, setIsLoaded] = useState(false);
     
     if (!user) navigate('/');
 
     useEffect(() => {
-      dispatch(getListThunk())
+      dispatch(getListThunk()).then(() => dispatch(getUserPosts()).then(() => setIsLoaded(true)))
     }, [dispatch])
 
     const handleDelete = playerId => e => {
       e.preventDefault()
       dispatch(deletePlayer(playerId))
     }
+
+    if(isLoaded){
+      if (posts) posts = Object.values(posts)
 
     return (
     <main>
@@ -47,9 +53,21 @@ const ProfilePage = () => {
       </div>
       <div className="card">
         <h2>My Posts</h2>
+        {posts &&
+        <ul>{posts.map(post => {
+          return (
+            <li key={post.id}  className="card">
+              <h3>{post.title}</h3>
+              <p>About:<NavLink to={`/players/${post.player_id}`}> {playerData[post.player_id].full_name}</NavLink></p>
+              <p>{post.body}</p>
+            </li>
+          )})}
+          </ul>}
+          {!posts &&
+          <p>No posts yet</p>}
       </div>
     </main>
-  )
+  )}
 };
 
 export default ProfilePage;
