@@ -1,4 +1,4 @@
-const SET_LIST = 'selected/setList';
+const SET_LIST = 'list/setList';
 
 export const setList = (list) => ({
     type: SET_LIST,

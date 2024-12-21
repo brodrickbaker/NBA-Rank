@@ -11,15 +11,17 @@ import { getUserPosts } from "../../redux/post";
 const ProfilePage = () => {
     const user = useSelector(state => state.session.user);
     const list = useSelector(state => state.list.list);
+    let posts = useSelector(state => state.posts.userPosts);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    let posts = useSelector(state => state.posts.userPosts);
     const [isLoaded, setIsLoaded] = useState(false);
     
     if (!user) navigate('/');
 
     useEffect(() => {
-      dispatch(getListThunk()).then(() => dispatch(getUserPosts()).then(() => setIsLoaded(true)))
+      dispatch(getListThunk())
+      .then(() => dispatch(getUserPosts())
+      .then(() => setIsLoaded(true)))
     }, [dispatch])
 
     const handleDelete = playerId => e => {
@@ -57,7 +59,7 @@ const ProfilePage = () => {
         <ul>{posts.map(post => {
           return (
             <li key={post.id}  className="card">
-              <h3>{post.title}</h3>
+              <h3>{post.title} {post.updated_at != post.created_at? "(edited)":""}</h3>
               <p>About:<NavLink to={`/players/${post.player_id}`}> {playerData[post.player_id].full_name}</NavLink></p>
               <p>{post.body}</p>
             </li>

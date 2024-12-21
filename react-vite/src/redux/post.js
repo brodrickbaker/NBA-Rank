@@ -1,15 +1,21 @@
 const SET_USER_POSTS = 'posts/setUserPosts'
 const SET_PLAYER_POSTS = 'posts/setPlayerPosts'
+const CLEAR_PLAYER_POSTS = 'posts/clearPlayerPosts'
 
-export const setUserPosts = (posts) => ({
+const setUserPosts = (posts) => ({
     type: SET_USER_POSTS,
     posts
   });
 
-  export const setPlayerPosts = (posts) => ({
+const setPlayerPosts = (posts) => ({
     type: SET_PLAYER_POSTS,
     posts
   });
+
+const clearPlayerPosts = () => ({
+    type: CLEAR_PLAYER_POSTS,
+    posts: null
+});
 
 export const getUserPosts = () => async (dispatch) => {
     const response = await fetch("/api/posts/current");
@@ -18,11 +24,22 @@ export const getUserPosts = () => async (dispatch) => {
         if (data.errors) {
             return;
         }
-        console.log(data)
         dispatch(setUserPosts(data));
     }
   };
 
+export const getPlayerPosts = (playerId) => async (dispatch) => {
+    const response = await fetch(`/api/posts/${playerId}`);
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+        if (data.errors) {
+            dispatch(clearPlayerPosts());
+            return;
+        }
+        dispatch(setPlayerPosts(data));
+    }
+  };
 
 
 const initialState = { 
@@ -48,6 +65,8 @@ function postReducer(state = initialState, action) {
         });
         return newState;
         }
+      case CLEAR_PLAYER_POSTS:
+        return { ...state, playerPosts: null };  
       default:
         return state;
     }

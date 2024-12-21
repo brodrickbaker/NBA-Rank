@@ -13,7 +13,7 @@ def get_user_posts():
     posts = Post.query.filter_by(user_id=current_user.id).all()
     if posts:
         return([post.to_dict() for post in posts])
-    return jsonify({"message": "user has no posts"})
+    return jsonify({"errors": "user has no posts"})
 
 #Get posts for specified player
 @post_routes.route('/<playerId>')
@@ -21,7 +21,7 @@ def get_player_posts(playerId):
     posts = Post.query.filter_by(player_id=playerId).all()
     if posts:
         return([post.to_dict() for post in posts])
-    return jsonify({"message": "Player posts couldn't be found"}), 404
+    return jsonify({"errors": "Player posts couldn't be found"})
 
 #Create a new post
 @post_routes.route('/<playerId>', methods=['POST'])

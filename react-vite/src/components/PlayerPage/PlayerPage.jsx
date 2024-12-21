@@ -1,33 +1,40 @@
 import { useParams } from "react-router-dom";
 import { seasonData } from "../../../data/season_data";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setPlayer } from "../../redux/selected";
 import { addToList } from "../../redux/list";
 import { getListThunk } from "../../redux/list";
+import { getPlayerPosts } from "../../redux/post";
 
 const PlayerPage = (props) => {
   const { playerData } = props
   const { playerId } = useParams()  
   const player = playerData[playerId]
   const user = useSelector(state => state.session.user);
-  const year = useSelector(state => state.selected.year)? useSelector(state => state.selected.year): 2023
-  const list = useSelector(state => state.list.list)
-  const dispatch = useDispatch()
+  const list = useSelector(state => state.list.list);
+  let posts = useSelector(state => state.posts.playerPosts);
+  let year = useSelector(state => state.selected.year);
+  const dispatch = useDispatch();
+  const [isLoaded, setIsLoaded] = useState(false);
 
+  if (!year) year = 2023
+  
   useEffect (() => {
-    dispatch(setPlayer(player?.full_name))
+    dispatch(setPlayer(player.full_name))
+    dispatch(getPlayerPosts(player.id))
     dispatch(getListThunk())
-  }, [dispatch])
+    setIsLoaded(true)
+  }, [dispatch, player])
   
   const handleClick = (e) => {
     e.preventDefault()
     dispatch(addToList(playerId))
   }
 
-  if (player) {
-  
-  const stats = player.seasons.find(season => season.year == year).teams[0]
+  if (isLoaded) {
+    if (posts) posts = Object.values(posts)
+    const stats = player.seasons.find(season => season.year == year).teams[0]
 
   return (
     <main>
@@ -62,7 +69,6 @@ const PlayerPage = (props) => {
                     <td>{stats.average.rebounds}</td>
                     <td>{stats.average.steals}</td>
                     <td>{stats.average.blocks}</td>
-
                 </tr>
                 <tr>
                     <th>Rank:</th>
@@ -78,8 +84,20 @@ const PlayerPage = (props) => {
             </tbody>
         </table>
       </div>
-      <h2>Posts</h2>
-      <div className="card"><p>No posts yet</p></div>
+      <div className="card">
+        <h2>Posts</h2>
+        {posts &&
+        <ul>{posts.map(post => {
+        return (
+          <li key={post.id}  className="card">
+            <h3>{post.title} {post.updated_at != post.created_at? "(edited)":""}</h3>
+            <p>{post.body}</p>
+          </li>
+        )})}
+        </ul>}
+        {!posts &&
+        <p>No posts yet</p>}
+      </div> 
     </main>
   )
     } else return (<p>Player not found</p>)

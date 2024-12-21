@@ -7,10 +7,11 @@ import { getListThunk } from "../../redux/list";
 import "./MainPage.css"
 
 const MainPage = () => {
-  const season = useSelector(state => state.selected.year)
-  const [year, selectYear] = useState(season? season:2023)
-  const dispatch = useDispatch()
+
   const user = useSelector(state => state.session.user);
+  const season = useSelector(state => state.selected.year);
+  const [year, selectYear] = useState(season? season:2023);
+  const dispatch = useDispatch();
 
     useEffect (() => {
       dispatch(setYear(year))
