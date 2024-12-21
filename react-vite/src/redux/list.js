@@ -1,8 +1,8 @@
-const SET_LIST = 'selected/setList';
+const SET_LIST = 'list/setList';
 
 export const setList = (list) => ({
     type: SET_LIST,
-    payload: list
+    list
   });
 
   
@@ -62,7 +62,7 @@ const initialState = { list: null};
 function listReducer(state = initialState, action) {
   switch (action.type) {
     case SET_LIST:
-      return { ...state, list: action.payload };
+      return { ...state, list: action.list };
     default:
       return state;
   }

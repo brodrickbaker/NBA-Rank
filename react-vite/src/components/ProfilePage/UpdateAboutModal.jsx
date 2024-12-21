@@ -5,7 +5,7 @@ import { useModal } from "../../context/Modal";
 
 const UpdateAboutModal = () => {
     const user = useSelector(state => state.session.user)
-    const [about, setAbout] = useState(user.about)
+    const [about, setAbout] = useState(user.about? user.about:"Say a little something about yourself")
     const dispatch = useDispatch()
     const {closeModal} = useModal()
 

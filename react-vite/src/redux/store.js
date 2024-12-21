@@ -8,11 +8,13 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import selectReducer from "./selected";
 import listReducer from "./list";
+import postReducer from "./post";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   selected: selectReducer,
-  list: listReducer
+  list: listReducer,
+  posts: postReducer
 });
 
 let enhancer;
