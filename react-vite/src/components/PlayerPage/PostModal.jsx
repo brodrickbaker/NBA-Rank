@@ -1,0 +1,58 @@
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { createPost, editPost, getPlayerPosts} from "../../redux/post";
+import { useModal } from "../../context/Modal";
+import { useParams } from "react-router-dom";
+
+const PostModal = (props) => {
+    const { method, postId } = props;
+    const posts = useSelector(state => state.posts.playerPosts);
+    const [title, setTitle] = useState(postId? posts[postId].title:'');
+    const [body, setBody] = useState(postId? posts[postId].body:'');
+    
+    const { playerId } = useParams();
+    const dispatch = useDispatch();
+    const {closeModal} = useModal();
+
+
+    const writePost = async (e) => {
+        e.preventDefault();
+        const post = {title: title, body: body}
+        if(method == 'POST') {
+            dispatch(createPost(post, playerId))
+        }
+        if(method == 'PUT') {
+            dispatch(editPost(post, postId))
+        }
+        dispatch(getPlayerPosts(playerId)) 
+        closeModal()
+    }
+
+    return (
+    <div className="card">
+        <form onSubmit={writePost}>
+        <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            required
+          />
+           {/* <textarea
+                name='body'
+                value={body}
+                rows='5'
+                onChange={setBody} >
+            </textarea> */}
+            <button className="btn" type="submit">Post</button>
+        </form>
+    </div>
+  )
+};
+
+export default PostModal;

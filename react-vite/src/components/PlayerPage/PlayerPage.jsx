@@ -6,11 +6,14 @@ import { setPlayer } from "../../redux/selected";
 import { addToList } from "../../redux/list";
 import { getListThunk } from "../../redux/list";
 import { getPlayerPosts } from "../../redux/post";
+import { deletePost } from "../../redux/post";
+import OpenModalButton from "../OpenModalButton";
+import PostModal from "./PostModal";
 
 const PlayerPage = (props) => {
-  const { playerData } = props
-  const { playerId } = useParams()  
-  const player = playerData[playerId]
+  const { playerData } = props;
+  const { playerId } = useParams();  
+  const player = playerData[playerId];
   const user = useSelector(state => state.session.user);
   const list = useSelector(state => state.list.list);
   let posts = useSelector(state => state.posts.playerPosts);
@@ -19,7 +22,7 @@ const PlayerPage = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   if (!year) year = 2023
-  
+
   useEffect (() => {
     dispatch(setPlayer(player.full_name))
     dispatch(getPlayerPosts(player.id))
@@ -27,9 +30,15 @@ const PlayerPage = (props) => {
     setIsLoaded(true)
   }, [dispatch, player])
   
-  const handleClick = (e) => {
+  const handleAdd = e => {
     e.preventDefault()
     dispatch(addToList(playerId))
+  }
+
+  const handleDelete = postId => e => {
+    e.preventDefault()
+    dispatch(deletePost(postId))
+    .then(() => dispatch(getPlayerPosts(player.id)))
   }
 
   if (isLoaded) {
@@ -41,7 +50,7 @@ const PlayerPage = (props) => {
       <h1>{player.full_name}</h1>
       <h3>Position: {player.position}, Current Team: {player.team? player.team.name: 'Not Currently in NBA'}, Drafted: {player.draft.year} Rd {player.draft.round} Pk {player.draft.pick}, Years Pro: {player.seasons[0].year - player.draft.year + 1}</h3>
       {user && list && !Object.values(list).find(p => p == player.id) &&
-        <button className="btn" onClick={handleClick}>Add to top 5</button>}
+        <button className="btn" onClick={handleAdd}>Add to top 5</button>}
       <h2>{year}-{Number(year) + 1} Season Stats</h2>
       <div id='stats' className="card">
         <table>
@@ -86,16 +95,31 @@ const PlayerPage = (props) => {
       </div>
       <div className="card">
         <h2>Posts</h2>
+        {user &&
+        <OpenModalButton
+        modalComponent={<PostModal method={'POST'}/>}
+        buttonText={'write a post'}
+        onModalClose={(() => dispatch(getPlayerPosts(player.id)))} 
+        />}
         {posts &&
         <ul>{posts.map(post => {
         return (
           <li key={post.id}  className="card">
-            <h3>{post.title} {post.updated_at != post.created_at? "(edited)":""}</h3>
+            <h3>{post.title} {post.updated_at != post.created_at && "(edited)"}</h3>
+            <p>By: {post.username}</p>
             <p>{post.body}</p>
+            {user && user.id == post.user_id && 
+              <OpenModalButton
+              modalComponent={<PostModal method={'PUT'} postId={post.id}/>}
+              buttonText={'edit post'}
+              onModalClose={(() => dispatch(getPlayerPosts(player.id)))} 
+              />}
+            {user && user.id == post.user_id && 
+              <button className="btn" onClick={handleDelete(post.id)}>delete post</button>}
           </li>
         )})}
         </ul>}
-        {!posts &&
+        {!Object.keys(posts).length &&
         <p>No posts yet</p>}
       </div> 
     </main>

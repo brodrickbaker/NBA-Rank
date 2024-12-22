@@ -24,6 +24,7 @@ def upgrade():
     sa.Column('body', sa.String(length=1000), nullable=False),
     sa.Column('player_id', sa.String(length=40), nullable=False),
     sa.Column('user_id', sa.Integer, nullable=False),
+    sa.Column('username', sa.String(length=40), nullable=False),
     sa.Column('created_at', sa.DateTime),
     sa.Column('updated_at', sa.DateTime),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
