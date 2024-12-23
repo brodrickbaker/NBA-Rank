@@ -14,7 +14,7 @@ def get_user_list():
         return jsonify(list.to_dict())
     return jsonify({"message": "List couldn't be found"}), 404
 
-#Add a player t the current user's list
+#Add a player to the current user's list
 @list_routes.route('/current', methods=['PUT'])
 @login_required
 def add_player():
@@ -48,7 +48,6 @@ def delete_player(playerId):
     list = List.query.filter_by(user_id=current_user.id).first()
     if list:
         for player, id in list.to_dict().items():
-            print(list.to_dict().items())
             if id == playerId:
                 if player == 'player_1':
                     list.player_1 = None
