@@ -21,7 +21,7 @@ const PlayerPage = (props) => {
   const dispatch = useDispatch();
 
   const [isLoaded, setIsLoaded] = useState(false);
-  const [likes, setLikes] = useState(playerLikes)
+  const [likes, setLikes] = useState(Object.values(playerLikes).length)
 
   if (!year) year = 2023
 
@@ -42,18 +42,18 @@ const PlayerPage = (props) => {
   const handleDelete = postId => e => {
     e.preventDefault()
     dispatch(deletePost(postId))
-    .then(() => dispatch(getPlayerPosts(player.id)))
+    .then(() => dispatch(getPlayerPosts(playerId)))
   }
 
   const handleLike = e => {
     e.preventDefault()
-    console.log(likes)
-    if(likes[user.id]) {
-      dispatch(removeLikeThunk(player.id))
-      setLikes(playerLikes)
+    if(playerLikes[user.id]) {
+      dispatch(removeLikeThunk(playerId))
+      dispatch(getLikesThunk())
+      setLikes(likes - 1)
     } else {
-      dispatch(addLikeThunk(player.id))
-      setLikes(playerLikes)
+      dispatch(addLikeThunk(playerId))
+      setLikes(likes + 1)
     }
 
   }
@@ -65,7 +65,7 @@ const PlayerPage = (props) => {
   return (
     <main>
       <h1>{player.full_name}</h1>
-      <h2>{Object.values(likes).length} likes</h2>
+      <h2>{likes} likes</h2>
       <button className='btn' onClick={handleLike}>Like</button>
       <h3>Position: {player.position}, Current Team: {player.team? player.team.name: 'Not Currently in NBA'}, Drafted: {player.draft.year} Rd {player.draft.round} Pk {player.draft.pick}, Years Pro: {player.seasons[0].year - player.draft.year + 1}</h3>
       {user && list && !Object.values(list).find(p => p == player.id) &&
@@ -122,10 +122,12 @@ const PlayerPage = (props) => {
         />}
         {posts &&
         <ul>{posts.map(post => {
-        return (
+          const created = new Date(post.created_at)
+          return (
           <li key={post.id}  className="card">
             <h3>{post.title} {post.updated_at != post.created_at && "(edited)"}</h3>
             <p>By: {post.username}</p>
+            <p>On: {created.toDateString()}</p>
             <p>{post.body}</p>
             {user && user.id == post.user_id && 
               <OpenModalButton
