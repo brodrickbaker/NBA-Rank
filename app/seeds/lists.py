@@ -2,7 +2,6 @@ from app.models import db, List, environment, SCHEMA
 from sqlalchemy.sql import text
 
 
-# Adds a demo user, you can add other users here if you want
 def seed_lists():
     list_1 = List(
         user_id=1, player_1='d2ee92e9-3e72-45eb-b156-2dc5adc1e6f7', player_2='53f2fa48-e61b-49fb-843d-8a3e872257eb')

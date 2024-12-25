@@ -31,11 +31,12 @@ def create_post(playerId):
     title = data.get('title')
     body = data.get('body')
     if title and body:
-        post = Post(title=title, 
-                    body=body, 
-                    user_id=current_user.id, 
-                    username=current_user.username, 
-                    player_id=playerId)
+        post = Post(
+            title=title, 
+            body=body, 
+            user_id=current_user.id, 
+            username=current_user.username, 
+            player_id=playerId)
         db.session.add(post)
         db.session.commit()
         return jsonify(post.to_dict()), 201
