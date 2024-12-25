@@ -15,8 +15,7 @@ const setPlayerPosts = (posts) => ({
   });
 
 const clearPlayerPosts = () => ({
-    type: CLEAR_PLAYER_POSTS,
-    posts: null
+    type: CLEAR_PLAYER_POSTS
 });
 
 const updatePosts = (post) => ({

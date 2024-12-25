@@ -3,10 +3,9 @@ import { seasonData } from "../../../data/season_data";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { setPlayer } from "../../redux/selected";
-import { addToList } from "../../redux/list";
-import { getListThunk } from "../../redux/list";
-import { getPlayerPosts } from "../../redux/post";
-import { deletePost } from "../../redux/post";
+import { addToList, getListThunk } from "../../redux/list";
+import { getPlayerPosts, deletePost } from "../../redux/post";
+import { getLikesThunk, addLikeThunk, removeLikeThunk, clearLikes } from "../../redux/like";
 import OpenModalButton from "../OpenModalButton";
 import PostModal from "./PostModal";
 
@@ -18,15 +17,20 @@ const PlayerPage = (props) => {
   const list = useSelector(state => state.list.list);
   let posts = useSelector(state => state.posts.playerPosts);
   let year = useSelector(state => state.selected.year);
+  const playerLikes = useSelector(state => state.likes.playerLikes);
   const dispatch = useDispatch();
+
   const [isLoaded, setIsLoaded] = useState(false);
+  const [likes, setLikes] = useState(playerLikes)
 
   if (!year) year = 2023
 
   useEffect (() => {
     dispatch(setPlayer(player.full_name))
     dispatch(getPlayerPosts(player.id))
+    dispatch(clearLikes())
     dispatch(getListThunk())
+    dispatch(getLikesThunk(player.id))
     setIsLoaded(true)
   }, [dispatch, player])
   
@@ -41,6 +45,19 @@ const PlayerPage = (props) => {
     .then(() => dispatch(getPlayerPosts(player.id)))
   }
 
+  const handleLike = e => {
+    e.preventDefault()
+    console.log(likes)
+    if(likes[user.id]) {
+      dispatch(removeLikeThunk(player.id))
+      setLikes(playerLikes)
+    } else {
+      dispatch(addLikeThunk(player.id))
+      setLikes(playerLikes)
+    }
+
+  }
+
   if (isLoaded) {
     if (posts) posts = Object.values(posts)
     const stats = player.seasons.find(season => season.year == year).teams[0]
@@ -48,6 +65,8 @@ const PlayerPage = (props) => {
   return (
     <main>
       <h1>{player.full_name}</h1>
+      <h2>{Object.values(likes).length} likes</h2>
+      <button className='btn' onClick={handleLike}>Like</button>
       <h3>Position: {player.position}, Current Team: {player.team? player.team.name: 'Not Currently in NBA'}, Drafted: {player.draft.year} Rd {player.draft.round} Pk {player.draft.pick}, Years Pro: {player.seasons[0].year - player.draft.year + 1}</h3>
       {user && list && !Object.values(list).find(p => p == player.id) &&
         <button className="btn" onClick={handleAdd}>Add to top 5</button>}

@@ -9,12 +9,14 @@ import sessionReducer from "./session";
 import selectReducer from "./selected";
 import listReducer from "./list";
 import postReducer from "./post";
+import likeReducer from "./like";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   selected: selectReducer,
   list: listReducer,
-  posts: postReducer
+  posts: postReducer,
+  likes: likeReducer
 });
 
 let enhancer;

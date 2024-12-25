@@ -8,10 +8,12 @@ like_routes = Blueprint('likes', __name__)
 #Get player likes by player id
 @like_routes.route('/<playerId>')
 def get_player_likes(playerId):
-    likes = Like.query.filter_by(player_id=playerId).all()
-    if likes:
-        return([like.to_dict() for like in likes])
-    return jsonify({"message": "Player has no likes"})
+    try:
+        likes = Like.query.filter_by(player_id=playerId).all()
+        if likes:
+            return([like.to_dict() for like in likes])
+    except:
+        return jsonify({"message": "Player has no likes"})
 
 #Add a like to a player
 @like_routes.route('/<playerId>', methods=['POST'])

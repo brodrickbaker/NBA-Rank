@@ -2,7 +2,6 @@ from app.models import db, Post, environment, SCHEMA
 from sqlalchemy.sql import text
 
 
-# Adds a demo user, you can add other users here if you want
 def seed_posts():
     post_1 = Post(
         user_id=1, player_id='d2ee92e9-3e72-45eb-b156-2dc5adc1e6f7', title='Is he the GOAT?', body="I'm not saying he is or he isn't, Im just saying there's a case to be made.", username='Demo')
