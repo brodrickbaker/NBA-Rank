@@ -12,7 +12,7 @@ def get_player_likes(playerId):
         likes = Like.query.filter_by(player_id=playerId).all()
         return([like.to_dict() for like in likes])
     except:
-        return jsonify({"message": "Player has no likes"})
+        return jsonify({"errors": "Player has no likes"})
 
 #Add a like to a player
 @like_routes.route('/<playerId>', methods=['POST'])
@@ -35,9 +35,9 @@ def add_like(playerId):
 def delete_player(playerId):
     like = Like.query.filter_by(user_id=current_user.id, player_id=playerId).first()
     if not like:
-        return jsonify({"message": "Like not found"})
+        return jsonify({"errors": "Like not found"})
     elif like.user_id != current_user.id:
-        return jsonify({"message":" Forbidden"}), 403
+        return jsonify({"errors":" Forbidden"}), 403
     db.session.delete(like)
     db.session.commit()
-    return jsonify({'message': "Successfully Deleted"}), 200
+    return jsonify(like.to_dict())
