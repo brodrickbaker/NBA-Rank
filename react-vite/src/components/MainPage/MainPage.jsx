@@ -1,20 +1,20 @@
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { seasonData } from "../../../data/season_data";
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { setYear } from "../../redux/selected";
 import { useDispatch, useSelector } from "react-redux";
 import { getListThunk } from "../../redux/list";
+import { MyContext } from "../../router/Layout";
 import "./MainPage.css"
 
 const MainPage = () => {
 
   const user = useSelector(state => state.session.user);
-  const season = useSelector(state => state.selected.year);
-  const [year, selectYear] = useState(season? season:2023);
+  const {year, selectYear, selectPlayer} = useContext(MyContext);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
     useEffect (() => {
-      dispatch(setYear(year))
       if (user){
         dispatch(getListThunk())
       }
@@ -23,7 +23,13 @@ const MainPage = () => {
   const handleChange = e => {
     selectYear(e.target.value)
     dispatch(setYear(e.target.value))
-};
+  };
+
+  const handleClick = player => e =>{
+    e.preventDefault()
+    selectPlayer(player)
+    navigate(`/players/${player}`)
+  } 
    
   return (
     <main>
@@ -46,7 +52,7 @@ const MainPage = () => {
                 {cat.ranks.map(r => {
                    if(r.rank <= 5){
                     return (
-                        <li key={r.player.reference}><NavLink to={`players/${r.player.id}`}>{r.player.full_name}, {r.score > 1? r.score:(r.score*100).toFixed(1)}{r.score > 1? '/game':'%'}</NavLink></li>
+                        <li key={r.player.reference} onClick={handleClick(r.player.id)}>{r.player.full_name}, {r.score > 1? r.score:(r.score*100).toFixed(1)}{r.score > 1? '/game':'%'}</li>
                     )}
                 })}
             </ol>

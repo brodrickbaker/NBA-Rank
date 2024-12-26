@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
+import PlayerSearch from "./PlayerSearch";
 import "./Navigation.css";
 
 function Navigation() {
@@ -8,7 +9,9 @@ function Navigation() {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-
+      <li>
+        <PlayerSearch />
+      </li>
       <li>
         <ProfileButton />
       </li>

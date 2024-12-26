@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import ProfilePage from '../components/ProfilePage';
@@ -33,9 +33,19 @@ export const router = createBrowserRouter([
         element: <CategoryPage />,
       },
       {
-        path: "players/:playerId",
-        element: <PlayerPage playerData={playerData}/>,
-      },
-    ],
-  },
+        path: "players",
+        element: <Outlet />,
+        children: [
+          {
+            path: "",
+            element: <h2 style={{"textAlign": "center"}}>Use the search bar above ⬆️ to search for a player.</h2>
+          },
+          {
+            path: ":playerId",
+            element: <PlayerPage playerData={playerData}/>,
+          }
+        ]
+      }
+    ]
+  }
 ]);

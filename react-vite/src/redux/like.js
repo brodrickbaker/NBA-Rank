@@ -23,14 +23,12 @@ export const clearLikes = () => ({
 })
 
 
-
-  
   export const getLikesThunk = (playerId) => async (dispatch) => {
     const response = await fetch(`/api/likes/${playerId}`);
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
-            dispatch(clearLikes)
+            dispatch(setLikes({}))
             return;
         }
         dispatch(setLikes(data));
@@ -47,10 +45,11 @@ export const clearLikes = () => ({
   
     if(response.ok) {
         const data = await response.json();
+        if (data.errors) {
+          return;
+        }
+        console.log(data)
         dispatch(addLike(data));
-    } else if (response.status <= 400) {
-      const errorMessages = await response.json();
-      return errorMessages
     } else {
       return { server: "Something went wrong. Please try again" }
     }
