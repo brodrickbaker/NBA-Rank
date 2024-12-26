@@ -1,7 +1,6 @@
 import { useNavigate, NavLink } from "react-router-dom";
 import { seasonData } from "../../../data/season_data";
 import { useEffect, useContext } from "react";
-import { setYear } from "../../redux/selected";
 import { useDispatch, useSelector } from "react-redux";
 import { getListThunk } from "../../redux/list";
 import { MyContext } from "../../router/Layout";
@@ -22,7 +21,6 @@ const MainPage = () => {
 
   const handleChange = e => {
     selectYear(e.target.value)
-    dispatch(setYear(e.target.value))
   };
 
   const handleClick = player => e =>{
@@ -34,6 +32,7 @@ const MainPage = () => {
   return (
     <main>
       <h1>Welcome to NBA Rank</h1>
+      <h1>{year}-{Number(year) + 1} Season Leaders</h1>
       <label htmlFor='year-select'>Select a season</label>
       <select name='year' id='year-select' onChange={handleChange} defaultValue={year}>
         <option value={2023}>2023-2024</option>

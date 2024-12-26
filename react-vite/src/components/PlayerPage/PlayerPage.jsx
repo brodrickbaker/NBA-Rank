@@ -57,6 +57,13 @@ const PlayerPage = (props) => {
    const handleChange = e => {
       selectYear(e.target.value)
     };
+  if(!isLoaded) {
+    return (
+      <h2>
+      fetching player data
+      </h2>
+    )
+  }
 
   if (isLoaded) {
     if (posts) posts = Object.values(posts) 
@@ -113,7 +120,7 @@ const PlayerPage = (props) => {
             </tbody>
         </table>
         <label htmlFor='year-select'>Select a season</label>
-      <select name='year' id='year-select' onChange={handleChange} defaultValue={2023}>
+        <select name='year' id='year-select' onChange={handleChange} defaultValue={''}>
         {selectedPlayer.seasons.filter((season) => season.type == 'REG').map(s => {
           return (
             <option value={s.year} key={s.year}>{s.year}</option>
@@ -127,7 +134,7 @@ const PlayerPage = (props) => {
         <OpenModalButton
         modalComponent={<PostModal method={'POST'}/>}
         buttonText={'write a post'}
-        onModalClose={(() => dispatch(getPlayerPosts(player.id)))} 
+        onModalClose={(() => dispatch(getPlayerPosts(player)))} 
         />}
         {posts &&
         <ul>{posts.map(post => {
@@ -142,7 +149,7 @@ const PlayerPage = (props) => {
               <OpenModalButton
               modalComponent={<PostModal method={'PUT'} postId={post.id}/>}
               buttonText={'edit post'}
-              onModalClose={(() => dispatch(getPlayerPosts(player.id)))} 
+              onModalClose={(() => dispatch(getPlayerPosts(player)))} 
               />}
             {user && user.id == post.user_id && 
               <button className="btn" onClick={handleDelete(post.id)}>delete post</button>}
@@ -154,7 +161,7 @@ const PlayerPage = (props) => {
       </div> 
     </main>
   )
-    } else return (<p>Player not found</p>)
+    } else return (<p>Player data not found</p>)
 };
 
 export default PlayerPage;

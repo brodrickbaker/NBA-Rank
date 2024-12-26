@@ -20,11 +20,13 @@ const PostModal = (props) => {
         const post = {title: title, body: body}
         if(method == 'POST') {
             dispatch(createPost(post, playerId))
+            .then(() => dispatch(getPlayerPosts(playerId)))
         }
         if(method == 'PUT') {
+            console.log(post)
             dispatch(editPost(post, postId))
-        }
-        dispatch(getPlayerPosts(playerId)) 
+            .then(() => dispatch(getPlayerPosts(playerId)))
+        } 
         closeModal()
     }
 
