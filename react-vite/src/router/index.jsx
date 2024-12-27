@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "",
-            element: <h2 style={{"textAlign": "center"}}>Use the search bar above ⬆️ to search for a player.</h2>
+            element: <h3 style={{"textAlign": "center"}}>Use the dropdown above ⬆️ to select a player.</h3>
           },
           {
             path: ":playerId",

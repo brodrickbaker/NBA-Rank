@@ -2,6 +2,7 @@ import { playerData } from "../../../data/player_data";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { MyContext } from "../../router/Layout";
+import { IoIosSearch } from "react-icons/io";
 
 const PlayerSearch = () => {
  const {player, selectPlayer} = useContext(MyContext);
@@ -30,15 +31,16 @@ const PlayerSearch = () => {
  }
 
  return (
-    <div>
+    <div id="player-search">
       <select name='player' id='player-select' onChange={handleChange}>
+        <option disabled selected>Select a player</option>
         {players.map(p =>{
             return (
                 <option value={p} key={p}>{playerData[p].full_name}</option>
             )
         })}
       </select>
-      <button className="btn" onClick={handleSearch} >Search</button>  
+      <a onClick={handleSearch}><IoIosSearch  className="nav-item"/></a>  
     </div>
   )
 };

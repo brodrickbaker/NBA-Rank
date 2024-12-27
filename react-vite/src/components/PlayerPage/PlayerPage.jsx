@@ -8,6 +8,7 @@ import OpenModalButton from "../OpenModalButton";
 import PostModal from "./PostModal";
 import { MyContext } from "../../router/Layout";
 import { useNavigate } from "react-router-dom";
+import { BiLike, BiSolidLike } from "react-icons/bi";
 
 const PlayerPage = (props) => {
   const { playerData } = props;
@@ -19,9 +20,9 @@ const PlayerPage = (props) => {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate()
-
-  if(!year) selectYear(2023) 
   const selectedPlayer = playerData[player]
+  if(!year || (selectedPlayer && !selectedPlayer.seasons.year)) selectYear(2023) 
+  
   
   useEffect (() => {
     if(!player) navigate('/')
@@ -57,26 +58,54 @@ const PlayerPage = (props) => {
    const handleChange = e => {
       selectYear(e.target.value)
     };
+  if(!isLoaded) {
+    return (
+      <h2 style={{textAlign:'center'}}>
+      fetching player data
+      </h2>
+    )
+  }
 
-  if (isLoaded) {
+  if (isLoaded && selectedPlayer) {
     if (posts) posts = Object.values(posts) 
     const stats = selectedPlayer.seasons.find(s => s.year == year).teams[0]
+    const season = seasonData[year]
 
   return (
     <main>
-      <h1>{selectedPlayer.full_name}</h1>
-      <h2>{Object.values(playerLikes).length} likes</h2>
-      {user && 
-      <button className='btn' onClick={handleLike}>Like</button>}
-      <h3>Position: {selectedPlayer.position}, Current Team: {selectedPlayer.team? selectedPlayer.team.name: 'Not Currently in NBA'}, Drafted: {selectedPlayer.draft.year} Rd {selectedPlayer.draft.round} Pk {selectedPlayer.draft.pick}, Years Pro: {selectedPlayer.seasons[0].year - selectedPlayer.draft.year + 1}</h3>
-      {user && list && !Object.values(list).find(p => p == selectedPlayer.id) &&
-        <button className="btn" onClick={handleAdd}>Add to top 5</button>}
-      <h2>{year}-{Number(year) + 1} Season Stats</h2>
+      <div className="title">
+        <h1>{selectedPlayer.full_name}</h1>
+        {user && list && !Object.values(list).find(p => p == selectedPlayer.id) &&
+              <button className="btn" onClick={handleAdd}>Add to top 5</button>}
+        <h2>
+          {Object.values(playerLikes).length} likes &nbsp;
+          {user && playerLikes[user.id] &&
+          <a onClick={handleLike}><BiSolidLike /></a>}
+          {user && !playerLikes[user.id] &&
+          <a onClick={handleLike}><BiLike /></a>}
+        </h2>
+      </div>
+      <div id='player-info'>
+        <h3>Position: {selectedPlayer.position}</h3>
+        <h3>Current Team: {selectedPlayer.team? selectedPlayer.team.name: 'Not Currently in NBA'}</h3>
+        <h3>Drafted: {selectedPlayer.draft.year} Rd {selectedPlayer.draft.round} Pk {selectedPlayer.draft.pick}</h3>
+        <h3>Years Pro: {selectedPlayer.seasons[0].year - selectedPlayer.draft.year + 1}</h3>
+      </div>
       <div id='stats' className="card">
+        <div id='season'>
+        <h2>{year}-{Number(year) + 1} Season Stats</h2>
+        <select name='year' id='year-select' onChange={handleChange} defaultValue={''}>
+            <option disabled selected>Select a season</option>
+            {selectedPlayer.seasons.filter((season) => season.type == 'REG').map(s => {
+            return (
+            <option value={s.year} key={s.year}>{s.year}-{Number(s.year) + 1}</option>
+          )
+          })}
+          </select></div>
         <table>
             <thead>
                 <tr>
-                    <th>Stat Category:</th>
+                    <th>Category:</th>
                     <th>Minutes</th>
                     <th>Points</th>
                     <th>FG %</th>
@@ -101,60 +130,59 @@ const PlayerPage = (props) => {
                 </tr>
                 <tr>
                     <th>Rank:</th>
-                    <td>{seasonData[year].categories[2].ranks.find(rank => rank.player.id == player)? seasonData[year].categories[2].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
-                    <td>{seasonData[year].categories[3].ranks.find(rank => rank.player.id == player)? seasonData[year].categories[3].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
-                    <td>{seasonData[year].categories[0].ranks.find(rank => rank.player.id == player)? seasonData[year].categories[0].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
-                    <td>{seasonData[year].categories[1].ranks.find(rank => rank.player.id == player)? seasonData[year].categories[1].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
-                    <td>{seasonData[year].categories[5].ranks.find(rank => rank.player.id == player)? seasonData[year].categories[5].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
-                    <td>{seasonData[year].categories[4].ranks.find(rank => rank.player.id == player)? seasonData[year].categories[4].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
-                    <td>{seasonData[year].categories[6].ranks.find(rank => rank.player.id == player)? seasonData[year].categories[6].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
-                    <td>{seasonData[year].categories[7].ranks.find(rank => rank.player.id == player)? seasonData[year].categories[7].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
+                    <td>{season.categories[2].ranks.find(rank => rank.player.id == player)? season.categories[2].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
+                    <td>{season.categories[3].ranks.find(rank => rank.player.id == player)? season.categories[3].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
+                    <td>{season.categories[0].ranks.find(rank => rank.player.id == player)? season.categories[0].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
+                    <td>{season.categories[1].ranks.find(rank => rank.player.id == player)? season.categories[1].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
+                    <td>{season.categories[5].ranks.find(rank => rank.player.id == player)? season.categories[5].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
+                    <td>{season.categories[4].ranks.find(rank => rank.player.id == player)? season.categories[4].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
+                    <td>{season.categories[6].ranks.find(rank => rank.player.id == player)? season.categories[6].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
+                    <td>{season.categories[7].ranks.find(rank => rank.player.id == player)? season.categories[7].ranks.find(rank => rank.player.id == player).rank: "N/R"}</td>
                 </tr>
             </tbody>
         </table>
-        <label htmlFor='year-select'>Select a season</label>
-      <select name='year' id='year-select' onChange={handleChange} defaultValue={2023}>
-        {selectedPlayer.seasons.filter((season) => season.type == 'REG').map(s => {
-          return (
-            <option value={s.year} key={s.year}>{s.year}</option>
-          )
-        })}
-      </select>  
       </div>
       <div className="card">
-        <h2>Posts</h2>
-        {user &&
-        <OpenModalButton
-        modalComponent={<PostModal method={'POST'}/>}
-        buttonText={'write a post'}
-        onModalClose={(() => dispatch(getPlayerPosts(player.id)))} 
-        />}
+        <div className="title">
+          <h2>Posts</h2>
+          {user &&
+          <OpenModalButton
+          modalComponent={<PostModal method={'POST'}/>}
+          buttonText={'write a post'}
+          onModalClose={(() => dispatch(getPlayerPosts(player)))} 
+          />}
+        </div>
         {posts &&
         <ul>{posts.map(post => {
           const created = new Date(post.created_at)
           return (
-          <li key={post.id}  className="card">
+          <li key={post.id} className="posts">
             <h3>{post.title} {post.updated_at != post.created_at && "(edited)"}</h3>
             <p>By: {post.username}</p>
             <p>On: {created.toDateString()}</p>
             <p>{post.body}</p>
-            {user && user.id == post.user_id && 
-              <OpenModalButton
-              modalComponent={<PostModal method={'PUT'} postId={post.id}/>}
-              buttonText={'edit post'}
-              onModalClose={(() => dispatch(getPlayerPosts(player.id)))} 
-              />}
-            {user && user.id == post.user_id && 
-              <button className="btn" onClick={handleDelete(post.id)}>delete post</button>}
+            <div id='post-buttons'>
+              {user && user.id == post.user_id && 
+                <OpenModalButton
+                modalComponent={<PostModal method={'PUT'} postId={post.id}/>}
+                buttonText={'edit'}
+                onModalClose={(() => dispatch(getPlayerPosts(player)))} 
+                />}
+              {user && user.id == post.user_id && 
+                <button className="btn" onClick={handleDelete(post.id)}>delete</button>}
+            </div>
           </li>
         )})}
         </ul>}
         {!Object.keys(posts).length &&
-        <p>No posts yet</p>}
+        <p>No posts yet, be the first!</p>}
       </div> 
     </main>
   )
-    } else return (<p>Player not found</p>)
+    } else return (
+    <main>
+      <h3 style={{alignSelf: 'center'}}>Player data not found</h3>
+    </main>)
 };
 
 export default PlayerPage;

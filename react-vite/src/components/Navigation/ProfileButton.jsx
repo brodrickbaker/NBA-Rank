@@ -40,13 +40,13 @@ function ProfileButton() {
     closeMenu();
   };
 
+  const loggedIn = user ? 'user' : ''
+
   return (
     <>
-      <button onClick={toggleMenu} className="btn">
-        <FaUserCircle />
-      </button>
+      <a><FaUserCircle onClick={toggleMenu} className="nav-item"/></a>
       {showMenu && (
-        <ul className={"profile-dropdown"} ref={ulRef}>
+        <ul className={`profile-dropdown ${loggedIn}`} ref={ulRef}>
           {user ? (
             <>
               <li><NavLink to="current">{user.username}</NavLink></li>

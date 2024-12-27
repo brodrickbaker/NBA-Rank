@@ -14,41 +14,40 @@ const PostModal = (props) => {
     const dispatch = useDispatch();
     const {closeModal} = useModal();
 
-
     const writePost = async (e) => {
         e.preventDefault();
         const post = {title: title, body: body}
         if(method == 'POST') {
             dispatch(createPost(post, playerId))
+            .then(() => dispatch(getPlayerPosts(playerId)))
         }
         if(method == 'PUT') {
+            console.log(post)
             dispatch(editPost(post, postId))
-        }
-        dispatch(getPlayerPosts(playerId)) 
+            .then(() => dispatch(getPlayerPosts(playerId)))
+        } 
         closeModal()
     }
 
     return (
-    <div className="card">
+    <div>
         <form onSubmit={writePost}>
+        <h2>Write a Post</h2>
         <input
             type="text"
+            placeholder="Post Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
-          <input
-            type="text"
+        <textarea
+            name='body'
+            placeholder="What makes him great?"
             value={body}
-            onChange={(e) => setBody(e.target.value)}
-            required
-          />
-           {/* <textarea
-                name='body'
-                value={body}
-                rows='5'
-                onChange={setBody} >
-            </textarea> */}
+            rows='5'
+            cols='50'
+            onChange={(e) => setBody(e.target.value)}>
+        </textarea>
             <button className="btn" type="submit">Post</button>
         </form>
     </div>
