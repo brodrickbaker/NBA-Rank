@@ -5,5 +5,12 @@
 }
 
 .categories .card {
-    width: 300px;
+    width: 265px;
+}
+
+#season {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 20px;
 }

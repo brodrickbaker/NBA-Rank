@@ -1,26 +1,34 @@
 import { useParams } from "react-router-dom";
 import { seasonData } from "../../../data/season_data";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { MyContext } from "../../router/Layout";
 
 const CategoryPage = () => {
   
-  const {year} = useContext(MyContext);
+  const {year, selectPlayer} = useContext(MyContext);
   const { category } = useParams();
+  const navigate = useNavigate();
+
+  
+  const handleClick = player => e =>{
+    e.preventDefault()
+    selectPlayer(player)
+    navigate(`/players/${player}`)
+  } 
 
   return (
-    <div>
-        <h1>{category.split('_').join(' ').toUpperCase()}</h1>
-        <ol>
+    <main>
+        <h1>{year}-{Number(year) + 1} {category.split('_').join(' ').toUpperCase()} LEADERS</h1>
+        <ol id='category-page'>
             {seasonData[year].categories.find(cat => cat.name == category).ranks?.map(r => {
                 const playerId = r.player.id
                 return (
-                    <li key={playerId}><NavLink to={`/players/${playerId}`}>{r.player.full_name}</NavLink></li>
+                    <li key={playerId}><a onClick={handleClick(playerId)}>{r.player.full_name}</a></li>
                   )
             })}
         </ol>
-    </div>
+    </main>
   )
 };
 

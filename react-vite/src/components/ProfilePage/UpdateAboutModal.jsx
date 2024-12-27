@@ -18,18 +18,14 @@ const UpdateAboutModal = () => {
     return (
     <div className="card">
         <form onSubmit={updateAbout}>
-        <input
-            type="text"
+            <h2>Update About Me</h2>
+            <textarea
+            name='about'
             value={about}
-            onChange={(e) => setAbout(e.target.value)}
-            required
-          />
-           {/* <textarea
-                name='about'
-                value={about}
-                rows='5'
-                onChange={setAbout} >
-            </textarea> */}
+            rows='5'
+            cols='50'
+            onChange={(e) => setAbout(e.target.value)} >
+            </textarea>
             <button className="btn" type="submit">Update</button>
         </form>
     </div>

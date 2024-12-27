@@ -1,3 +1,51 @@
 .profile-dropdown {
   position: absolute;
+  top: 25px;
+  right: 25px;
+  display: flex;
+  min-width: 125px;
+  flex-direction: column;
+  background-color:  #ebebeb;
+  box-shadow: 2px 2px 5px #818181;
+  margin-right: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding-left: 0;
+}
+
+#player-search * {
+  padding-left: 10px;
+}
+
+#player-select {
+  height: 30px;
+}
+
+.nav .modal-item:hover {
+    cursor: pointer;
+    background-color: #262020;
+}
+
+.nav .modal-item {
+  color: #818181;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.nav > li {
+  align-self: center;
+  scale: 1.25;
+}
+
+.user {
+  width: fit-content;
+  padding: 5px;
+}
+
+.user li {
+  padding: 5px;
+}
+
+.nav-item {
+  scale: 2;
 }
