@@ -9,6 +9,12 @@ def seed_likes():
         user_id=2, player_id='d2ee92e9-3e72-45eb-b156-2dc5adc1e6f7')
     like_3 = Like(
         user_id=3, player_id='d2ee92e9-3e72-45eb-b156-2dc5adc1e6f7')
+    like_1 = Like(
+        user_id=4, player_id='d2ee92e9-3e72-45eb-b156-2dc5adc1e6f7')
+    like_2 = Like(
+        user_id=5, player_id='d2ee92e9-3e72-45eb-b156-2dc5adc1e6f7')
+    like_3 = Like(
+        user_id=6, player_id='d2ee92e9-3e72-45eb-b156-2dc5adc1e6f7')
 
     db.session.add(like_1)
     db.session.add(like_2)

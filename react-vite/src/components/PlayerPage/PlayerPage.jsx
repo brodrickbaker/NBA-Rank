@@ -21,9 +21,8 @@ const PlayerPage = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate()
   const selectedPlayer = playerData[player]
-  if(!year || (selectedPlayer && !selectedPlayer.seasons.year)) selectYear(2023) 
-  
-  
+  if(!year || (selectedPlayer && !Object.values(selectedPlayer.seasons).find(season => season.year == year))) selectYear(2023) 
+
   useEffect (() => {
     if(!player) navigate('/')
       dispatch(getPlayerPosts(player))
@@ -58,6 +57,7 @@ const PlayerPage = (props) => {
    const handleChange = e => {
       selectYear(e.target.value)
     };
+
   if(!isLoaded) {
     return (
       <h2 style={{textAlign:'center'}}>
@@ -70,15 +70,15 @@ const PlayerPage = (props) => {
     if (posts) posts = Object.values(posts) 
     const stats = selectedPlayer.seasons.find(s => s.year == year).teams[0]
     const season = seasonData[year]
-
+    const listItems = Object.values(list).filter(item => item)
   return (
     <main>
       <div className="title">
         <h1>{selectedPlayer.full_name}</h1>
-        {user && list && !Object.values(list).find(p => p == selectedPlayer.id) &&
+        {user && !listItems.find(p => p == selectedPlayer.id) && listItems.length < 6 &&
               <button className="btn" onClick={handleAdd}>Add to top 5</button>}
         <h2>
-          {Object.values(playerLikes).length} likes &nbsp;
+          {Object.values(playerLikes).length} {Object.values(playerLikes).length == 1? "like":"likes"} &nbsp;
           {user && playerLikes[user.id] &&
           <a onClick={handleLike}><BiSolidLike /></a>}
           {user && !playerLikes[user.id] &&
@@ -94,7 +94,7 @@ const PlayerPage = (props) => {
       <div id='stats' className="card">
         <div id='season'>
         <h2>{year}-{Number(year) + 1} Season Stats</h2>
-        <select name='year' id='year-select' onChange={handleChange} defaultValue={''}>
+        <select name='year' id='year-select' onChange={handleChange}>
             <option disabled selected>Select a season</option>
             {selectedPlayer.seasons.filter((season) => season.type == 'REG').map(s => {
             return (
