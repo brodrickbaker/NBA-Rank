@@ -55,10 +55,12 @@ h2, h5 {
     font-weight: 400;
     color: #8c05d5;
 }
+
 a {
     text-decoration: none;
     color: #777777;
 }
+
 a:hover {
     color: #eea422;
     cursor: pointer;
@@ -216,6 +218,7 @@ textarea {
     display: flex;
     justify-content: space-between;
     padding-bottom: 5px;
+    min-width: 275px;
 }
 
 #top-5 h2 {

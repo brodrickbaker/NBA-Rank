@@ -21,6 +21,7 @@ const PlayerPage = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate()
   const selectedPlayer = playerData[player]
+  let listItems = []
   if(!year || (selectedPlayer && !Object.values(selectedPlayer.seasons).find(season => season.year == year))) selectYear(2023) 
 
   useEffect (() => {
@@ -70,12 +71,14 @@ const PlayerPage = (props) => {
     if (posts) posts = Object.values(posts) 
     const stats = selectedPlayer.seasons.find(s => s.year == year).teams[0]
     const season = seasonData[year]
-    const listItems = Object.values(list).filter(item => item)
+    if (list) {
+      listItems = Object.values(list).filter(item => item)
+    }
   return (
     <main>
       <div className="title">
         <h1>{selectedPlayer.full_name}</h1>
-        {user && !listItems.find(p => p == selectedPlayer.id) && listItems.length < 6 &&
+        {user && list && !listItems.find(p => p == selectedPlayer.id) && listItems.length < 6 &&
               <button className="btn" onClick={handleAdd}>Add to top 5</button>}
         <h2>
           {Object.values(playerLikes).length} {Object.values(playerLikes).length == 1? "like":"likes"} &nbsp;
