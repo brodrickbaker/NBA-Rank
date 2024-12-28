@@ -45,7 +45,7 @@ function LoginFormModal() {
   };
 
   return (
-    <div className="card">
+    <div>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>

@@ -169,10 +169,16 @@ td, th {
 
 #modal-content {
     border-radius: 10px;
+    padding: 20px;
 }
 
-#modal-content .card{
-    margin: 0;
+#modal-content form {
+    display: flex;
+}
+
+#modal-content label{
+    display: flex;
+    align-self: flex-end;
 }
 
 textarea {
