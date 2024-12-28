@@ -91,7 +91,7 @@ a:hover {
     align-items: center;
     position: sticky;
     top: 0px;
-    height: 50px;
+    height: 55px;
     box-sizing: border-box;
     margin: 0px;
     z-index: 99;
@@ -129,10 +129,11 @@ a:hover {
     box-shadow: 0 0 5px #959393;
 }
 
-input, select, option {
+input, select, option, textarea {
     color: #332B2B;
     background-color: #f9ecd7;
     border-radius: 5px;
+    font-size: 18px;
 }
 
 option:checked {
@@ -170,6 +171,8 @@ td, th {
 #modal-content {
     border-radius: 10px;
     padding: 20px;
+    background-color: #ebebeb;
+    border: 2px solid #6a03a1;
 }
 
 #modal-content form {
@@ -259,7 +262,7 @@ textarea {
     justify-content: space-evenly;
 }
 
-@media screen and (max-width:1000px) {
+/* @media screen and (max-width:1000px) {
  
     .nav {
         flex-direction: column;
@@ -272,4 +275,4 @@ textarea {
     * {
         flex-grow: 1;
     }
-}
+} */
