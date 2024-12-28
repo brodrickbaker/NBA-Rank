@@ -4,7 +4,7 @@ from sqlalchemy.sql import text
 
 def seed_lists():
     list_1 = List(
-        user_id=1, player_1='d2ee92e9-3e72-45eb-b156-2dc5adc1e6f7', player_2='53f2fa48-e61b-49fb-843d-8a3e872257eb')
+        user_id=1, player_1='0afbe608-940a-4d5d-a1f7-468718c67d91', player_2='8ec91366-faea-4196-bbfd-b8fab7434795', player_3='d2ee92e9-3e72-45eb-b156-2dc5adc1e6f7', player_4='53f2fa48-e61b-49fb-843d-8a3e872257eb')
     list_2 = List(
         user_id=2, player_1='d2ee92e9-3e72-45eb-b156-2dc5adc1e6f7', player_2='53f2fa48-e61b-49fb-843d-8a3e872257eb')
     list_3 = List(

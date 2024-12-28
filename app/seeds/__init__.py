@@ -2,6 +2,7 @@ from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .lists import seed_lists, undo_lists
 from .posts import seed_posts, undo_posts
+from .likes import seed_likes, undo_likes
 
 from app.models.db import db, environment, SCHEMA
 
@@ -21,9 +22,11 @@ def seed():
         undo_users()
         undo_lists()
         undo_posts()
+        undo_likes()
     seed_users()
     seed_lists()
     seed_posts()
+    seed_likes()
 
 
 # Creates the `flask seed undo` command
@@ -32,3 +35,4 @@ def undo():
     undo_users()
     undo_lists()
     undo_posts()
+    undo_likes()
