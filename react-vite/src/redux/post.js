@@ -1,6 +1,7 @@
 const SET_USER_POSTS = 'posts/setUserPosts'
 const SET_PLAYER_POSTS = 'posts/setPlayerPosts'
 const CLEAR_PLAYER_POSTS = 'posts/clearPlayerPosts'
+const CLEAR_USER_POSTS = 'posts/clearUserPosts'
 const UPDATE_POSTS = 'posts/updatePosts'
 const REMOVE_POST = 'posts/removePost'
 
@@ -18,6 +19,10 @@ const clearPlayerPosts = () => ({
     type: CLEAR_PLAYER_POSTS
 });
 
+const clearUserPosts = () => ({
+  type: CLEAR_USER_POSTS
+});
+
 const updatePosts = (post) => ({
     type: UPDATE_POSTS,
     post
@@ -33,6 +38,7 @@ export const getUserPosts = () => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
+            dispatch(clearUserPosts())
             return;
         }
         dispatch(setUserPosts(data));
@@ -136,6 +142,8 @@ function postReducer(state = initialState, action) {
         }
       case CLEAR_PLAYER_POSTS:
         return { ...state, playerPosts: {} };
+      case CLEAR_USER_POSTS:
+          return { ...state, userPosts: null};
       default:  
         return state;
     }
