@@ -39,8 +39,8 @@ const MainPage = () => {
       </p>
       <div id='season'>
       <h1>{year}-{Number(year) + 1} Season Leaders</h1>
-      <select name='year' id='year-select' onChange={handleChange}>
-        <option disabled selected>Select a season</option>
+      <select name='year' id='year-select' onChange={handleChange} defaultValue='Select a season'>
+        <option disabled>Select a season</option>
         <option value={2023}>2023-2024</option>
         <option value={2022}>2022-2023</option>
         <option value={2021}>2021-2022</option>
