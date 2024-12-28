@@ -97,8 +97,8 @@ const PlayerPage = (props) => {
       <div id='stats' className="card">
         <div id='season'>
         <h2>{year}-{Number(year) + 1} Season Stats</h2>
-        <select name='year' id='year-select' onChange={handleChange}>
-            <option disabled selected>Select a season</option>
+        <select name='year' id='year-select' onChange={handleChange} defaultValue='Select a season'>
+            <option disabled>Select a season</option>
             {selectedPlayer.seasons.filter((season) => season.type == 'REG').map(s => {
             return (
             <option value={s.year} key={s.year}>{s.year}-{Number(s.year) + 1}</option>

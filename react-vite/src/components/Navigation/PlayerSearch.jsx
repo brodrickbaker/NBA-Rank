@@ -32,8 +32,8 @@ const PlayerSearch = () => {
 
  return (
     <div id="player-search">
-      <select name='player' id='player-select' onChange={handleChange}>
-        <option disabled selected>Select a player</option>
+      <select name='player' id='player-select' onChange={handleChange} defaultValue='Select a player'>
+        <option disabled>Select a player</option>
         {players.map(p =>{
             return (
                 <option value={p} key={p}>{playerData[p].full_name}</option>
