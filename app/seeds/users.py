@@ -4,15 +4,24 @@ from sqlalchemy.sql import text
 
 def seed_users():
     demo = User(
-        username='Demo', email='demo@aa.io', password='password', about='about Demo')
+        username='Demo', email='demo@aa.io', password='password', about="I'm a passionate basketball fan who loves everything about the game. I enjoy analyzing player stats, debating the greatest of all time, and staying updated with the latest news.")
     marnie = User(
         username='marnie', email='marnie@aa.io', password='password', about='about Marnie')
     bobbie = User(
         username='bobbie', email='bobbie@aa.io', password='password', about='about Bobbie')
+    user1 = User( 
+        username='User1', email='user1@example.com', password='password1', about='about User1' ) 
+    user2 = User( 
+        username='User2', email='user2@example.com', password='password2', about='about User2' ) 
+    user3 = User( 
+        username='User3', email='user3@example.com', password='password3', about='about User3' )
 
     db.session.add(demo)
     db.session.add(marnie)
     db.session.add(bobbie)
+    db.session.add(user1)
+    db.session.add(user2)
+    db.session.add(user3)
     db.session.commit()
 
 
