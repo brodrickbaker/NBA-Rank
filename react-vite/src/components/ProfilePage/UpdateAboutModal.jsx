@@ -16,7 +16,7 @@ const UpdateAboutModal = () => {
     }
 
     return (
-    <div className="card">
+    <div>
         <form onSubmit={updateAbout}>
             <h2>Update About Me</h2>
             <textarea

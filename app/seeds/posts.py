@@ -21,7 +21,7 @@ def seed_posts():
     post_4 = Post(
         user_id=1, player_id='0afbe608-940a-4d5d-a1f7-468718c67d91', 
         title="LeBron James' Incredible Longevity", 
-        body="Just watched another stellar performance by LeBron James! At 36, he's still dominating the court like he's in his prime. His ability to adapt and evolve his game over the years is simply unmatched. Do you think we'll ever see another player with such incredible longevity and versatility? #KingJames #GOATdebate", 
+        body="Just watched another stellar performance by LeBron James! At 39, he's still dominating the court like he's in his prime. His ability to adapt and evolve his game over the years is simply unmatched. Do you think we'll ever see another player with such incredible longevity and versatility? #KingJames #GOATdebate", 
         username='Demo')
     post_5 = Post(
         user_id=1, player_id='53f2fa48-e61b-49fb-843d-8a3e872257eb', 
