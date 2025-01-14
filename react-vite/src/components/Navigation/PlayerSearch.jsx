@@ -27,7 +27,7 @@ const PlayerSearch = () => {
  const handleSearch = e => {
     e.preventDefault()
     selectPlayer(selectedPlayer)
-    navigate(`/players/${player}`)
+    navigate(`/players/${selectedPlayer}`)
  }
 
  return (
