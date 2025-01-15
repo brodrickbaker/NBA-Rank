@@ -23,7 +23,8 @@
 
 .nav .modal-item:hover {
     cursor: pointer;
-    background-color: #262020;
+    background-color: #6a03a1;
+    color: #f9f6f6;;
 }
 
 .nav .modal-item {
