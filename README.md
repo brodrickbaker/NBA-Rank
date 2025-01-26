@@ -34,11 +34,11 @@ The site was deployed using render.com
 ## Main page
 <img width="1339" alt="Screenshot 2025-01-26 at 10 04 36 AM" src="https://github.com/user-attachments/assets/54d7f36d-be50-4de6-91a7-21f3eb22060c" />
 
-## Stock Page
-* If a Stock is owned by a user they are able to sell that stock, the color of the sell button is determined by whether the price has increased or decreased since the user purchased the stock.
-* The chart data is displayed using the perfomance of the stock over the previous week with chart.js
-![Screenshot 2024-11-18 215748](https://github.com/user-attachments/assets/cbbf0a55-6ad0-4663-a699-7eede0dc03e1)
-![Screenshot 2024-11-18 215816](https://github.com/user-attachments/assets/a0076941-66a3-4b44-80e7-9f9795bdebe5)
+## Player Page
+<img width="1327" alt="Screenshot 2025-01-26 at 10 05 12 AM" src="https://github.com/user-attachments/assets/68cf6fde-7b88-41f3-82dd-8d1dc45b867b" />
+
+## User Page
+<img width="1335" alt="Screenshot 2025-01-26 at 10 05 39 AM" src="https://github.com/user-attachments/assets/34d444f0-7ae2-4e27-abcf-1dd8d3f428c0" />
 
 ## Endpoints
 | Request | Purpose | Return Value |
