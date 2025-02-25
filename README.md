@@ -26,8 +26,8 @@ The player data is retrieved from the https://sportradar.com/ API
 The site was deployed using render.com
 
 ## Future Features
-* Currently users can only view their own pages. Update to allow users to see other users' pages.
-* Posts - add the ability for users to like and reply to other users' posts.
+* Currently users can only view their own pages. Update to allow users to see other users' pages
+* Posts - add the ability for users to like and reply to other users' posts
 * Players - would like to display images for players
 
 ## Screenshots
