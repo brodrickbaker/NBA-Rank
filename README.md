@@ -21,7 +21,7 @@
 * Alembic
 * WTForms
 
-The player data is retrieved from the https://sportradar.com/ API
+The player data is retrieved from the [https://sportradar.com/](https://sportradar.com/media-tech/data-content/sports-data-api/) API
 <br>
 The site was deployed using render.com
 
