@@ -31,4 +31,5 @@
     "vite": "^4.5.14",
     "vite-plugin-eslint": "^1.8.1"
   }
+  "@supabase/supabase-js": "^2.0.0"
 }
